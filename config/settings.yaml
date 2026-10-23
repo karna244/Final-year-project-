@@ -1,0 +1,42 @@
+# Configuration for AI Cyber Incident Prioritization & Alert Triage System
+# Group 26PB82 - Team Alpha
+
+# Risk Scoring Formula Weights: R = w1*M + w2*S + w3*C + w4*F
+# Constraint: Sum of weights must equal 1.0
+risk_weights:
+  ml_prob_weight: 0.40      # w1: Random Forest Malicious Probability (0-100)
+  severity_weight: 0.25     # w2: Original Alert Severity Proxy (0-100)
+  context_weight: 0.20      # w3: NetworkX Entity Connectivity / Centrality (0-100)
+  frequency_weight: 0.15    # w4: Rolling Time-Window Event Burst Factor (0-100)
+
+# Incident Priority Thresholds based on calculated Risk Score (0-100)
+priority_thresholds:
+  critical: 80.0   # Score >= 80 -> CRITICAL (Immediate isolation, SLA < 15m)
+  high: 60.0       # Score >= 60 -> HIGH (Forensic review, SLA < 1h)
+  medium: 30.0     # Score >= 30 -> MEDIUM (Batch review, SLA < 24h)
+  low: 0.0         # Score >= 0  -> LOW (Automated suppression/log)
+
+# Severity Mapping (Original alerts to 0-100 scale)
+severity_mapping:
+  low: 25.0
+  medium: 50.0
+  high: 75.0
+  critical: 100.0
+
+# Preprocessing & Triage Windows
+deduplication:
+  window_seconds: 300       # 5-minute rolling window for duplicate suppression
+  keys: ["source_ip", "destination_ip", "event_type"]
+
+# Graph Analysis Settings
+graph:
+  hub_degree_percentile: 90 # Nodes in top 10% degree are considered Hub entities
+  scale_factor: 12.5        # Scaling factor for degree centrality into 0-100
+
+# File Paths
+paths:
+  raw_data: "data/raw/cybersecurity_alerts.csv"
+  processed_data: "data/processed/alerts_processed.csv"
+  model_save: "models/random_forest_model.joblib"
+  preprocessor_save: "models/preprocessor.joblib"
+  metrics_report: "reports/metrics_summary.json"
