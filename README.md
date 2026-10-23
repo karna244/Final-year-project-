@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # AI-Based Cyber Incident Prioritization and Risk-Aware Alert Triage
 
 **Academic Program:** B.Tech Computer Science & Engineering (Batch 2023)  
@@ -135,3 +136,6 @@ ai-cyber-incident-triage/
     ├── test_risk_scoring.py    # Risk formula & reason codes tests
     └── test_pipeline.py        # End-to-end integration tests
 ```
+=======
+# Final-year-project-
+>>>>>>> 8834fb0b372d230efdeb1aea0b81ed746801a917
